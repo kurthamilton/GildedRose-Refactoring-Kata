@@ -89,4 +89,26 @@ public static class GildedRoseTest
         app.UpdateQuality();
         return item.Quality;
     }
+
+    [TestCase(1, 100, ExpectedResult = 99)]
+    [TestCase(0, 100, ExpectedResult = 98)]
+    [TestCase(-1, 100, ExpectedResult = 98)]
+    public static int UpdateQuality_QualityStartsAboveFifty_QualityDecreases(int sellIn, int quality)
+    {
+        var item = new Item { Name = "foo", SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
+
+    [TestCase(1, 100, ExpectedResult = 100)]
+    [TestCase(0, 100, ExpectedResult = 100)]
+    [TestCase(-1, 100, ExpectedResult = 100)]
+    public static int UpdateQuality_AgedBrie_QualityStartsAboveFifty_QualityDoesNotIncrease(int sellIn, int quality)
+    {
+        var item = new Item { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
 }
