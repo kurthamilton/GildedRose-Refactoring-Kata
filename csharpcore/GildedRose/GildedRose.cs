@@ -22,7 +22,7 @@ public class GildedRose
             var config = _itemConfigFactory.Get(item);
 
             item.Quality = config.GetQuality(item);
-            item.SellIn += config.SellInOffset;            
+            item.SellIn = config.GetSellIn(item);
         }
     }
 }
