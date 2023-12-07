@@ -47,12 +47,14 @@ public class GildedRose
 
     private int GetQualityOffset(Item item, ItemConfig config)
     {
-        if (item.Name == Constants.BackstagePasses && item.SellIn <= 0)
+        var threshold = config.ThresholdFor(item.SellIn);
+        if (threshold == null)
         {
-            return -1 * item.Quality;
+            return config.DefaultOffset;
         }
 
-        var threshold = config.ThresholdFor(item.SellIn);
-        return threshold?.Offset ?? config.DefaultOffset;
+        return threshold.AbsoluteAmount != null
+            ? threshold.AbsoluteAmount.Value - item.Quality
+            : threshold.Offset;
     }
 }

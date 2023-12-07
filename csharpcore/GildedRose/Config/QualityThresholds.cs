@@ -2,12 +2,15 @@
 
 public class QualityThresholds
 {
-    public QualityThresholds(int? lowerBound, int? upperBound, int offset) 
+    public QualityThresholds(int? lower, int? upper, int offset = 0, int? absolute = null) 
     { 
-        LowerBound = lowerBound;
+        AbsoluteAmount = absolute;
+        LowerBound = lower;
         Offset = offset;
-        UpperBound = upperBound;
+        UpperBound = upper;
     }    
+
+    public int? AbsoluteAmount { get; set; }
 
     public int Offset { get; }
 
