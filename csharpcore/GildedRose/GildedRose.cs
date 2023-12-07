@@ -22,8 +22,7 @@ public class GildedRose
 
             EnsureWithinBounds(item, config);
 
-            int sellInOffset = GetSellInOffset(item);
-            item.SellIn += sellInOffset;
+            item.SellIn += config.SellInOffset;
 
             int qualityOffset = GetQualityOffset(item, config);
             item.Quality += qualityOffset;            
@@ -69,11 +68,8 @@ public class GildedRose
             return offset;
         }
 
-        return item.SellIn < 0 ? 2 * config.DefaultOffset : config.DefaultOffset;
-    }
-
-    private int GetSellInOffset(Item item)
-    {
-        return item.Name == Constants.Sulfuras ? 0 : -1;        
+        return item.SellIn < 0 
+            ? 2 * config.DefaultOffset 
+            : config.DefaultOffset;
     }
 }
