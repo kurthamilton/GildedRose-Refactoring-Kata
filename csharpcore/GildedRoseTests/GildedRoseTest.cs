@@ -16,6 +16,7 @@ public static class GildedRoseTest
         Assert.AreEqual("foo", items[0].Name);
     }
 
+    /** GENERAL ITEM TESTS **/
     [TestCase(5, 10, ExpectedResult = 9)]
     [TestCase(4, 10, ExpectedResult = 9)]
     [TestCase(3, 10, ExpectedResult = 9)]
@@ -53,6 +54,19 @@ public static class GildedRoseTest
         return item.Quality;
     }
 
+    [TestCase(1, 100, ExpectedResult = 99)]
+    [TestCase(0, 100, ExpectedResult = 98)]
+    [TestCase(-1, 100, ExpectedResult = 98)]
+    public static int UpdateQuality_QualityStartsAboveFifty_QualityDecreases(int sellIn, int quality)
+    {
+        var item = new Item { Name = "foo", SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
+
+
+    /** AGED BRIE TESTS **/
     [TestCase(5, 10, ExpectedResult = 11)]
     [TestCase(4, 10, ExpectedResult = 11)]
     [TestCase(3, 10, ExpectedResult = 11)]
@@ -90,17 +104,6 @@ public static class GildedRoseTest
         return item.Quality;
     }
 
-    [TestCase(1, 100, ExpectedResult = 99)]
-    [TestCase(0, 100, ExpectedResult = 98)]
-    [TestCase(-1, 100, ExpectedResult = 98)]
-    public static int UpdateQuality_QualityStartsAboveFifty_QualityDecreases(int sellIn, int quality)
-    {
-        var item = new Item { Name = "foo", SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
-        app.UpdateQuality();
-        return item.Quality;
-    }
-
     [TestCase(1, 100, ExpectedResult = 100)]
     [TestCase(0, 100, ExpectedResult = 100)]
     [TestCase(-1, 100, ExpectedResult = 100)]
@@ -115,8 +118,9 @@ public static class GildedRoseTest
         var app = new GildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
-    }
-
+    }    
+    
+    /** SULFURAS TESTS **/
     [TestCase(5, 10, ExpectedResult = 10)]
     [TestCase(4, 10, ExpectedResult = 10)]
     [TestCase(3, 10, ExpectedResult = 10)]
@@ -133,5 +137,5 @@ public static class GildedRoseTest
         var app = new GildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
-    }
+    }    
 }
