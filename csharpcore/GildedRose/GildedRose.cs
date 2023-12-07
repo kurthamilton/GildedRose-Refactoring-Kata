@@ -77,34 +77,26 @@ public class GildedRose
         
     private int GetPostSellinQualityOffset(Item item)
     {
-        if (item.SellIn < 0)
+        if (item.SellIn >= 0)
         {
-            if (item.Name != Constants.AgedBrie)
-            {
-                if (item.Name != Constants.BackstagePasses)
-                {
-                    if (item.Quality > 0)
-                    {
-                        if (item.Name != Constants.Sulfuras)
-                        {
-                            return -1;
-                        }
-                    }
-                }
-                else
-                {
-                    return -1 * item.Quality;
-                }
-            }
-            else
-            {
-                if (item.Quality < 50)
-                {
-                    return 1;
-                }
-            }
+            return 0;
         }
 
-        return 0;
+        if (item.Name == Constants.Sulfuras)
+        {
+            return 0;
+        }
+
+        if (item.Name == Constants.AgedBrie)
+        {
+            return item.Quality < 50 ? 1 : 0;
+        }
+
+        if (item.Name == Constants.BackstagePasses)
+        {
+            return -1 * item.Quality;
+        }
+
+        return item.Quality > 0 ? -1 : 0;
     }
 }
