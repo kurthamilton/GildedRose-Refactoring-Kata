@@ -117,5 +117,21 @@ public static class GildedRoseTest
         return item.Quality;
     }
 
-
+    [TestCase(5, 10, ExpectedResult = 10)]
+    [TestCase(4, 10, ExpectedResult = 10)]
+    [TestCase(3, 10, ExpectedResult = 10)]
+    [TestCase(2, 10, ExpectedResult = 10)]
+    [TestCase(1, 10, ExpectedResult = 10)]
+    [TestCase(0, 10, ExpectedResult = 10)]
+    [TestCase(-1, 10, ExpectedResult = 10)]
+    [TestCase(-2, 10, ExpectedResult = 10)]
+    [TestCase(-3, 10, ExpectedResult = 10)]
+    [TestCase(-4, 10, ExpectedResult = 10)]
+    public static int UpdateQuality_Sulfuras_DoesNotDegrade(int sellIn, int quality)
+    {
+        var item = new Item { Name = Constants.Sulfuras, SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
 }
