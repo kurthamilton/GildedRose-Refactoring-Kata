@@ -1,5 +1,6 @@
 ﻿namespace GildedRoseKata;
 
+// DO NOT TOUCH!!!
 public class Item
 {
     public string Name { get; set; }

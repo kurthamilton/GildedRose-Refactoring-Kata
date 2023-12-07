@@ -4,6 +4,7 @@ namespace GildedRoseKata;
 
 public class GildedRose
 {
+    // DO NOT TOUCH!!!
     private readonly IList<Item> _items;
 
     public GildedRose(IList<Item> items)
