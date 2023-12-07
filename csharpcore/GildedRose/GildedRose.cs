@@ -22,14 +22,11 @@ public class GildedRose
 
             EnsureWithinBounds(item, config);
 
-            int preSellInOffset = ApplyPreSellInQualityOffset(item, config);
-            item.Quality += preSellInOffset;
-
             int sellInOffset = GetSellInOffset(item);
             item.SellIn += sellInOffset;
 
-            int postSellInOffset = GetPostSellInQualityOffset(item, config);
-            item.Quality += postSellInOffset;
+            int qualityOffset = GetQualityOffset(item, config);
+            item.Quality += qualityOffset;            
 
             EnsureWithinBounds(item, config);
         }
@@ -48,18 +45,23 @@ public class GildedRose
         }
     }
 
-    private int ApplyPreSellInQualityOffset(Item item, ItemConfig config)
+    private int GetQualityOffset(Item item, ItemConfig config)
     {        
         if (item.Name == Constants.BackstagePasses)
         {
+            if (item.SellIn < 0)
+            {
+                return -1 * item.Quality;
+            }
+
             int offset = config.DefaultOffset;
 
-            if (item.SellIn < 11)
+            if (item.SellIn < 10)
             {
                 offset += config.DefaultOffset;             
             }
 
-            if (item.SellIn < 6)
+            if (item.SellIn < 5)
             {
                 offset += config.DefaultOffset;      
             }
@@ -67,26 +69,11 @@ public class GildedRose
             return offset;
         }
 
-        return config.DefaultOffset;
+        return item.SellIn < 0 ? 2 * config.DefaultOffset : config.DefaultOffset;
     }
 
     private int GetSellInOffset(Item item)
     {
         return item.Name == Constants.Sulfuras ? 0 : -1;        
-    }
-        
-    private int GetPostSellInQualityOffset(Item item, ItemConfig config)
-    {
-        if (item.SellIn >= 0)
-        {
-            return 0;
-        }
-
-        if (item.Name == Constants.BackstagePasses)
-        {
-            return -1 * item.Quality;
-        }
-
-        return config.DefaultOffset;
     }
 }
