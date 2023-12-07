@@ -21,9 +21,11 @@ public class GildedRose
             var config = _itemConfigFactory.Get(item);
 
             ApplyPreSellinQualityOffset(item);
-            ApplySellinOffset(item);
-            int offset = GetPostSellinQualityOffset(item);
-            item.Quality += offset;
+            int sellinOffset = GetSellinOffset(item);
+            item.SellIn += sellinOffset;
+
+            int postSellinOffset = GetPostSellinQualityOffset(item);
+            item.Quality += postSellinOffset;
         }
     }
 
@@ -67,12 +69,9 @@ public class GildedRose
         }
     }
 
-    private void ApplySellinOffset(Item item)
+    private int GetSellinOffset(Item item)
     {
-        if (item.Name != Constants.Sulfuras)
-        {
-            item.SellIn = item.SellIn - 1;
-        }
+        return item.Name == Constants.Sulfuras ? 0 : -1;        
     }
         
     private int GetPostSellinQualityOffset(Item item)
