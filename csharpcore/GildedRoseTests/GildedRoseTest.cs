@@ -116,4 +116,6 @@ public static class GildedRoseTest
         app.UpdateQuality();
         return item.Quality;
     }
+
+
 }
