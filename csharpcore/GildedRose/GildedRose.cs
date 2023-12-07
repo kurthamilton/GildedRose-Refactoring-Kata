@@ -20,63 +20,92 @@ public class GildedRose
         {
             var config = _itemConfigFactory.Get(item);
 
-            ApplyPreSellinQualityOffset(item);
-            int sellinOffset = GetSellinOffset(item);
-            item.SellIn += sellinOffset;
+            bool sideEffectFeatureToggle = true;
+            int preSellInOffset = ApplyPreSellInQualityOffset(item, sideEffectFeatureToggle);
+            if (!sideEffectFeatureToggle)
+            {
+                item.Quality += preSellInOffset;
+            }
 
-            int postSellinOffset = GetPostSellinQualityOffset(item);
-            item.Quality += postSellinOffset;
+            int sellInOffset = GetSellInOffset(item);
+            item.SellIn += sellInOffset;
+
+            int postSellInOffset = GetPostSellInQualityOffset(item);
+            item.Quality += postSellInOffset;
         }
     }
 
-    private void ApplyPreSellinQualityOffset(Item item)
+    private int ApplyPreSellInQualityOffset(Item item, bool sideAffectFeatureToggle)
     {
         if (item.Name == Constants.AgedBrie || item.Name == Constants.BackstagePasses)
         {
             if (item.Quality >= 50)
             {
-                return;
+                return 0;
             }
 
-            item.Quality = item.Quality + 1;
+            int offset = 1;
+            int quality = item.Quality + offset;
+
+            if (sideAffectFeatureToggle)
+            {
+                item.Quality = quality;
+            }            
 
             if (item.Name != Constants.BackstagePasses)
             {
-                return;
+                return offset;
             }
 
-            if (item.SellIn < 11 && item.Quality < 50)
+            if (item.SellIn < 11 && quality < 50)
             {
-                item.Quality = item.Quality + 1;
+                quality += 1;
+                offset += 1;
+
+                if (sideAffectFeatureToggle)
+                {
+                    item.Quality = quality;
+                }                
             }
 
-            if (item.SellIn < 6 && item.Quality < 50)
+            if (item.SellIn < 6 && quality < 50)
             {
-                item.Quality = item.Quality + 1;
+                offset += 1;
+                quality += 1;
+
+                if (sideAffectFeatureToggle)
+                {
+                    item.Quality = quality;
+                }                
             }
 
-            return;
+            return offset;
         }
 
         if (item.Quality <= 0)
         {
-            return;
+            return 0;
         }
 
         if (item.Name == Constants.Sulfuras)
         {
-            return;
+            return 0;
         }
 
-        item.Quality = item.Quality - 1;
+        if (sideAffectFeatureToggle)
+        {
+            item.Quality = item.Quality - 1;
+        }
+
+        return -1;
     }
 
-    private int GetSellinOffset(Item item)
+    private int GetSellInOffset(Item item)
     {
         return item.Name == Constants.Sulfuras ? 0 : -1;        
     }
         
-    private int GetPostSellinQualityOffset(Item item)
+    private int GetPostSellInQualityOffset(Item item)
     {
         if (item.SellIn >= 0)
         {
