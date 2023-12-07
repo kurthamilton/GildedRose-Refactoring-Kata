@@ -20,6 +20,8 @@ public class GildedRose
         {
             var config = _itemConfigFactory.Get(item);
 
+            EnsureWithinBounds(item, config);
+
             int preSellInOffset = ApplyPreSellInQualityOffset(item, config);
             item.Quality += preSellInOffset;
 
@@ -28,6 +30,21 @@ public class GildedRose
 
             int postSellInOffset = GetPostSellInQualityOffset(item, config);
             item.Quality += postSellInOffset;
+
+            EnsureWithinBounds(item, config);
+        }
+    }
+
+    private void EnsureWithinBounds(Item item, ItemConfig config)
+    {
+        if (item.Quality < config.Min)
+        {
+            item.Quality = config.Min;
+        }
+
+        if (item.Quality > config.Max)
+        {
+            item.Quality = config.Max;
         }
     }
 
@@ -35,11 +52,6 @@ public class GildedRose
     {        
         if (item.Name == Constants.AgedBrie || item.Name == Constants.BackstagePasses)
         {
-            if (item.Quality >= config.Max)
-            {
-                return 0;
-            }
-
             int offset = config.DefaultOffset;
             
             if (item.Name != Constants.BackstagePasses)
@@ -47,27 +59,17 @@ public class GildedRose
                 return offset;
             }
 
-            if (item.SellIn < 11 && item.Quality + offset < config.Max)
+            if (item.SellIn < 11)
             {
                 offset += config.DefaultOffset;             
             }
 
-            if (item.SellIn < 6 && item.Quality + offset < config.Max)
+            if (item.SellIn < 6)
             {
                 offset += config.DefaultOffset;      
             }
 
             return offset;
-        }
-
-        if (item.Quality <= config.Min)
-        {
-            return 0;
-        }
-
-        if (item.Name == Constants.Sulfuras)
-        {
-            return 0;
         }
 
         return config.DefaultOffset;

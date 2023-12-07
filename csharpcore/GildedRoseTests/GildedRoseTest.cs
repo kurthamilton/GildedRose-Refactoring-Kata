@@ -63,9 +63,9 @@ public static class GildedRoseTest
         return item.Quality;
     }
 
-    [TestCase(1, 100, ExpectedResult = 99)]
-    [TestCase(0, 100, ExpectedResult = 98)]
-    [TestCase(-1, 100, ExpectedResult = 98)]
+    [TestCase(1, 100, ExpectedResult = 49)]
+    [TestCase(0, 100, ExpectedResult = 48)]
+    [TestCase(-1, 100, ExpectedResult = 48)]
     public static int UpdateQuality_QualityStartsAboveFifty_QualityDecreases(int sellIn, int quality)
     {
         var item = new Item { Name = "foo", SellIn = sellIn, Quality = quality };
@@ -113,16 +113,11 @@ public static class GildedRoseTest
         return item.Quality;
     }
 
-    [TestCase(1, 100, ExpectedResult = 100)]
-    [TestCase(0, 100, ExpectedResult = 100)]
-    [TestCase(-1, 100, ExpectedResult = 100)]
-    public static int UpdateQuality_AgedBrie_QualityStartsAboveFifty_QualityDoesNotIncrease(int sellIn, int quality)
+    [TestCase(1, 100, ExpectedResult = 50)]
+    [TestCase(0, 100, ExpectedResult = 50)]
+    [TestCase(-1, 100, ExpectedResult = 50)]
+    public static int UpdateQuality_AgedBrie_QualityStartsAboveFifty_QualityDoesNotExceedFifty(int sellIn, int quality)
     {
-        // This behaviour seems to contradict the requirement
-        // 	- The Quality of an item is never more than 50
-        // It is also a requirement that the Item class cannot be changed, so
-        // make an assumption that the behaviour is by design and not taken into 
-        // account in the requirements.
         var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
         var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
@@ -130,17 +125,17 @@ public static class GildedRoseTest
     }    
     
     /** SULFURAS TESTS **/
-    [TestCase(5, 10, ExpectedResult = 10)]
-    [TestCase(4, 10, ExpectedResult = 10)]
-    [TestCase(3, 10, ExpectedResult = 10)]
-    [TestCase(2, 10, ExpectedResult = 10)]
-    [TestCase(1, 10, ExpectedResult = 10)]
-    [TestCase(0, 10, ExpectedResult = 10)]
-    [TestCase(-1, 10, ExpectedResult = 10)]
-    [TestCase(-2, 10, ExpectedResult = 10)]
-    [TestCase(-3, 10, ExpectedResult = 10)]
-    [TestCase(-4, 10, ExpectedResult = 10)]
-    public static int UpdateQuality_Sulfuras_DoesNotDegrade(int sellIn, int quality)
+    [TestCase(5, 10, ExpectedResult = 80)]
+    [TestCase(4, 10, ExpectedResult = 80)]
+    [TestCase(3, 10, ExpectedResult = 80)]
+    [TestCase(2, 10, ExpectedResult = 80)]
+    [TestCase(1, 10, ExpectedResult = 80)]
+    [TestCase(0, 10, ExpectedResult = 80)]
+    [TestCase(-1, 10, ExpectedResult = 80)]
+    [TestCase(-2, 10, ExpectedResult = 80)]
+    [TestCase(-3, 10, ExpectedResult = 80)]
+    [TestCase(-4, 10, ExpectedResult = 80)]
+    public static int UpdateQuality_Sulfuras_QualityEqualsEighty(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.Sulfuras, SellIn = sellIn, Quality = quality };
         var app = CreateGildedRose(new List<Item> { item });
@@ -215,10 +210,10 @@ public static class GildedRoseTest
         return item.Quality;
     }
 
-    [TestCase(3, 100, ExpectedResult = 100)]
-    [TestCase(2, 100, ExpectedResult = 100)]
-    [TestCase(1, 100, ExpectedResult = 100)]
-    public static int UpdateQuality_BackstagePasses_QualityStartsAboveFifty_QualityDoesNotIncrease(int sellIn, int quality)
+    [TestCase(3, 100, ExpectedResult = 50)]
+    [TestCase(2, 100, ExpectedResult = 50)]
+    [TestCase(1, 100, ExpectedResult = 50)]
+    public static int UpdateQuality_BackstagePasses_QualityStartsAboveFifty_QualityDoesNotExceedFifty(int sellIn, int quality)
     {        
         var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
         var app = CreateGildedRose(new List<Item> { item });
