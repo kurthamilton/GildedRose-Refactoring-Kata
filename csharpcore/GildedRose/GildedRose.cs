@@ -82,21 +82,11 @@ public class GildedRose
             return 0;
         }
 
-        if (item.Name == Constants.Sulfuras)
-        {
-            return 0;
-        }
-
-        if (item.Name == Constants.AgedBrie)
-        {
-            return item.Quality < config.Max ? config.DefaultOffset : 0;
-        }
-
         if (item.Name == Constants.BackstagePasses)
         {
             return -1 * item.Quality;
         }
 
-        return item.Quality > 0 ? config.DefaultOffset : 0;
+        return config.DefaultOffset;
     }
 }
