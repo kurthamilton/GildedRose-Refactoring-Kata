@@ -18,19 +18,19 @@ public static class TextTestFixture
             new Item {Name = Constants.Sulfuras, SellIn = -1, Quality = 80},
             new Item
             {
-                Name = "Backstage passes to a TAFKAL80ETC concert",
+                Name = Constants.BackstagePasses,
                 SellIn = 15,
                 Quality = 20
             },
             new Item
             {
-                Name = "Backstage passes to a TAFKAL80ETC concert",
+                Name = Constants.BackstagePasses,
                 SellIn = 10,
                 Quality = 49
             },
             new Item
             {
-                Name = "Backstage passes to a TAFKAL80ETC concert",
+                Name = Constants.BackstagePasses,
                 SellIn = 5,
                 Quality = 49
             },
