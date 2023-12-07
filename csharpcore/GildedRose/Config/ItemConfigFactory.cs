@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GildedRoseKata.Config;
+﻿namespace GildedRoseKata.Config;
 
 public class ItemConfigFactory : IItemConfigFactory
 {
@@ -11,13 +9,13 @@ public class ItemConfigFactory : IItemConfigFactory
             Constants.AgedBrie =>new ItemConfig(max: 50, min: 0, defaultOffset: 1, sellInOffset: -1, 
                 thresholds: new[] 
                 { 
-                    new ItemConfigQualityOffsetThresholds(null, 0, 2) 
+                    new QualityThresholds(null, 0, 2) 
                 }),
             Constants.BackstagePasses => new ItemConfig(max: 50, min: 0, defaultOffset: 1, sellInOffset: -1, 
                 thresholds: new[] 
                 { 
-                    new ItemConfigQualityOffsetThresholds(1, 5, 3),
-                    new ItemConfigQualityOffsetThresholds(6, 10, 2)
+                    new QualityThresholds(1, 5, 3),
+                    new QualityThresholds(6, 10, 2)
                 }),
             // ignore conjured for now
             // Constants.Conjured =>        new ItemConfig(max: 50, min: 0,  defaultOffset: -2),
