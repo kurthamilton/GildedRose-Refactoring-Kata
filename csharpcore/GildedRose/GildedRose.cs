@@ -23,10 +23,10 @@ public class GildedRose
 
             EnsureWithinBounds(item, config);
 
-            item.SellIn += config.SellInOffset;
+            var qualityOffset = GetQualityOffset(item, config);
+            item.Quality += qualityOffset;
 
-            int qualityOffset = GetQualityOffset(item, config);
-            item.Quality += qualityOffset;            
+            item.SellIn += config.SellInOffset;            
 
             EnsureWithinBounds(item, config);
         }
@@ -46,31 +46,13 @@ public class GildedRose
     }
 
     private int GetQualityOffset(Item item, ItemConfig config)
-    {        
-        if (item.Name == Constants.BackstagePasses)
+    {
+        if (item.Name == Constants.BackstagePasses && item.SellIn <= 0)
         {
-            if (item.SellIn < 0)
-            {
-                return -1 * item.Quality;
-            }
-
-            int offset = config.DefaultOffset;
-
-            if (item.SellIn < 10)
-            {
-                offset += config.DefaultOffset;             
-            }
-
-            if (item.SellIn < 5)
-            {
-                offset += config.DefaultOffset;      
-            }
-
-            return offset;
+            return -1 * item.Quality;
         }
 
-        return item.SellIn < 0 
-            ? 2 * config.DefaultOffset 
-            : config.DefaultOffset;
+        var threshold = config.ThresholdFor(item.SellIn);
+        return threshold?.Offset ?? config.DefaultOffset;
     }
 }
