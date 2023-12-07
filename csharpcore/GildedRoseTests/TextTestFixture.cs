@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GildedRoseKata;
+using GildedRoseKata.Config;
 
 namespace GildedRoseTests;
 

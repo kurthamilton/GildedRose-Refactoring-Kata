@@ -1,4 +1,4 @@
-﻿namespace GildedRoseKata;
+﻿namespace GildedRoseKata.Config;
 
 public interface IItemConfigFactory
 {
