@@ -23,8 +23,7 @@ public class GildedRose
 
             EnsureWithinBounds(item, config);
 
-            var qualityOffset = GetQualityOffset(item, config);
-            item.Quality += qualityOffset;
+            item.Quality = config.GetQuality(item);
 
             item.SellIn += config.SellInOffset;            
 
@@ -43,18 +42,5 @@ public class GildedRose
         {
             item.Quality = config.Max;
         }
-    }
-
-    private int GetQualityOffset(Item item, ItemConfig config)
-    {
-        var threshold = config.ThresholdFor(item.SellIn);
-        if (threshold == null)
-        {
-            return config.DefaultOffset;
-        }
-
-        return threshold.AbsoluteAmount != null
-            ? threshold.AbsoluteAmount.Value - item.Quality
-            : threshold.Offset;
     }
 }
