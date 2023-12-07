@@ -21,26 +21,8 @@ public class GildedRose
         {
             var config = _itemConfigFactory.Get(item);
 
-            EnsureWithinBounds(item, config);
-
             item.Quality = config.GetQuality(item);
-
             item.SellIn += config.SellInOffset;            
-
-            EnsureWithinBounds(item, config);
-        }
-    }
-
-    private void EnsureWithinBounds(Item item, ItemConfig config)
-    {
-        if (item.Quality < config.Min)
-        {
-            item.Quality = config.Min;
-        }
-
-        if (item.Quality > config.Max)
-        {
-            item.Quality = config.Max;
         }
     }
 }

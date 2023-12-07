@@ -14,17 +14,7 @@ public class ItemConfig
         Min = min;
         SellInOffset = sellInOffset;
         Thresholds = thresholds?.ToArray() ?? Array.Empty<QualityThresholds>();
-    }    
-
-    /// <summary>
-    /// The max value for item quality
-    /// </summary>
-    public int Max { get; }
-
-    /// <summary>
-    /// The min value for item quality
-    /// </summary>
-    public int Min { get; }
+    }        
 
     /// <summary>
     /// The per-day offset for item expiry date
@@ -37,21 +27,42 @@ public class ItemConfig
     private int DefaultOffset { get; }
 
     /// <summary>
+    /// The max value for item quality
+    /// </summary>
+    private int Max { get; }
+
+    /// <summary>
+    /// The min value for item quality
+    /// </summary>
+    private int Min { get; }
+
+    /// <summary>
     /// A collection of thresholds for variable quality offsets
     /// </summary>
     private IReadOnlyCollection<QualityThresholds> Thresholds { get; }
 
     public int GetQuality(Item item)
     {
+        var quality = GetBoundedValue(item.Quality);
+
         var threshold = ThresholdFor(item.SellIn);
         if (threshold == null)
         {
-            return item.Quality + DefaultOffset;
+            return GetBoundedValue(quality + DefaultOffset);
         }
 
-        return threshold.AbsoluteAmount != null
+        return GetBoundedValue(threshold.AbsoluteAmount != null
             ? threshold.AbsoluteAmount.Value
-            : item.Quality + threshold.Offset;
+            : quality + threshold.Offset);
+    }
+
+    private int GetBoundedValue(int value)
+    {
+        return value > Max
+            ? Max
+            : value < Min
+            ? Min
+            : value;
     }
 
     private QualityThresholds ThresholdFor(int sellIn)
