@@ -52,4 +52,17 @@ public static class GildedRoseTest
         app.UpdateQuality();
         return item.Quality;
     }
+
+    [TestCase(5, 10, ExpectedResult = 11)]
+    [TestCase(4, 10, ExpectedResult = 11)]
+    [TestCase(3, 10, ExpectedResult = 11)]
+    [TestCase(2, 10, ExpectedResult = 11)]
+    [TestCase(1, 10, ExpectedResult = 11)]
+    public static int UpdateQuality_AgedBrie_IncreasesInQuality(int sellIn, int quality)
+    {
+        var item = new Item { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
 }
