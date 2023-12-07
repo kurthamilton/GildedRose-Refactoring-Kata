@@ -223,7 +223,6 @@ public static class GildedRoseTest
     }
 
     /** CONJURED TESTS **/
-    [Ignore("Currently not implemented")]
     [TestCase(5, 10, ExpectedResult = 8)]
     [TestCase(4, 10, ExpectedResult = 8)]
     [TestCase(3, 10, ExpectedResult = 8)]
@@ -237,7 +236,6 @@ public static class GildedRoseTest
         return item.Quality;
     }
 
-    [Ignore("Currently not implemented")]
     [TestCase(0, 10, ExpectedResult = 6)]
     [TestCase(-1, 10, ExpectedResult = 6)]
     [TestCase(-2, 10, ExpectedResult = 6)]
