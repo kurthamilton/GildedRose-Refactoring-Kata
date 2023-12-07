@@ -22,7 +22,8 @@ public class GildedRose
 
             ApplyPreSellinQualityOffset(item);
             ApplySellinOffset(item);
-            ApplyPostSellinQualityOffset(item);
+            int offset = GetPostSellinQualityOffset(item);
+            item.Quality += offset;
         }
     }
 
@@ -74,7 +75,7 @@ public class GildedRose
         }
     }
         
-    private void ApplyPostSellinQualityOffset(Item item)
+    private int GetPostSellinQualityOffset(Item item)
     {
         if (item.SellIn < 0)
         {
@@ -86,22 +87,24 @@ public class GildedRose
                     {
                         if (item.Name != Constants.Sulfuras)
                         {
-                            item.Quality = item.Quality - 1;
+                            return -1;
                         }
                     }
                 }
                 else
                 {
-                    item.Quality = item.Quality - item.Quality;
+                    return -1 * item.Quality;
                 }
             }
             else
             {
                 if (item.Quality < 50)
                 {
-                    item.Quality = item.Quality + 1;
+                    return 1;
                 }
             }
         }
+
+        return 0;
     }
 }
