@@ -41,4 +41,15 @@ public static class GildedRoseTest
         app.UpdateQuality();
         return item.Quality;
     }
+
+    [TestCase(1, ExpectedResult = 0)]
+    [TestCase(0, ExpectedResult = 0)]
+    [TestCase(-1, ExpectedResult = 0)]    
+    public static int UpdateQuality_QualityZero_QualityNeverNegative(int sellIn)
+    {
+        var item = new Item { Name = "foo", SellIn = sellIn, Quality = 0 };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
 }
