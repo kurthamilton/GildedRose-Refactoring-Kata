@@ -31,42 +31,44 @@ public class GildedRose
 
     private void ApplyPreSellinQualityOffset(Item item)
     {
-        if (item.Name != Constants.AgedBrie && item.Name != Constants.BackstagePasses)
+        if (item.Name == Constants.AgedBrie || item.Name == Constants.BackstagePasses)
         {
-            if (item.Quality > 0)
+            if (item.Quality >= 50)
             {
-                if (item.Name != Constants.Sulfuras)
-                {
-                    item.Quality = item.Quality - 1;
-                }
+                return;
             }
-        }
-        else
-        {
-            if (item.Quality < 50)
+
+            item.Quality = item.Quality + 1;
+
+            if (item.Name != Constants.BackstagePasses)
+            {
+                return;
+            }
+
+            if (item.SellIn < 11 && item.Quality < 50)
             {
                 item.Quality = item.Quality + 1;
-
-                if (item.Name == Constants.BackstagePasses)
-                {
-                    if (item.SellIn < 11)
-                    {
-                        if (item.Quality < 50)
-                        {
-                            item.Quality = item.Quality + 1;
-                        }
-                    }
-
-                    if (item.SellIn < 6)
-                    {
-                        if (item.Quality < 50)
-                        {
-                            item.Quality = item.Quality + 1;
-                        }
-                    }
-                }
             }
+
+            if (item.SellIn < 6 && item.Quality < 50)
+            {
+                item.Quality = item.Quality + 1;
+            }
+
+            return;
         }
+
+        if (item.Quality <= 0)
+        {
+            return;
+        }
+
+        if (item.Name == Constants.Sulfuras)
+        {
+            return;
+        }
+
+        item.Quality = item.Quality - 1;
     }
 
     private int GetSellinOffset(Item item)
