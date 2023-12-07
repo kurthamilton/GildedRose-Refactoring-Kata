@@ -38,7 +38,7 @@ public static class TextTestFixture
             new Item {Name = Constants.Conjured, SellIn = 3, Quality = 6}
         };
 
-        var app = new GildedRose(items);
+        var app = new GildedRose(items, new ItemConfigFactory());
 
         int days = 2;
         if (args.Length > 0)

@@ -6,16 +6,20 @@ public class GildedRose
 {
     // DO NOT TOUCH!!!
     private readonly IList<Item> _items;
+    private readonly IItemConfigFactory _itemConfigFactory;
 
-    public GildedRose(IList<Item> items)
+    public GildedRose(IList<Item> items, IItemConfigFactory itemConfigFactory)
     {
+        _itemConfigFactory = itemConfigFactory;
         _items = items;
     }
 
     public void UpdateQuality()
     {
-        foreach (Item item in _items)
+        foreach (var item in _items)
         {
+            var config = _itemConfigFactory.Get(item);
+
             if (item.Name != Constants.AgedBrie && item.Name != Constants.BackstagePasses)
             {
                 if (item.Quality > 0)

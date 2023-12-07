@@ -20,7 +20,7 @@ public static class GildedRoseTest
     public static void Foo()
     {
         var items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
         app.UpdateQuality();
         Assert.AreEqual("foo", items[0].Name);
     }
@@ -34,7 +34,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_BeforeSellByDate_QualityDegradesByOnePerDay(int sellIn, int quality)
     {
         var item = new Item { Name = "foo", SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -47,7 +47,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_OnOrAfterSellByDate_QualityDegradesByTwoPerDay(int sellIn, int quality)
     {
         var item = new Item { Name = "foo", SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -58,7 +58,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_QualityZero_QualityNeverNegative(int sellIn)
     {
         var item = new Item { Name = "foo", SellIn = sellIn, Quality = 0 };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -69,7 +69,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_QualityStartsAboveFifty_QualityDecreases(int sellIn, int quality)
     {
         var item = new Item { Name = "foo", SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -84,7 +84,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_AgedBrie_BeforeSellByDate_IncreasesInQualityByOne(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -97,7 +97,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_AgedBrie_AfterSellByDate_IncreasesInQualityByTwo(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -108,7 +108,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_AgedBrie_QualityNeverExceedsFifty(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -124,7 +124,7 @@ public static class GildedRoseTest
         // make an assumption that the behaviour is by design and not taken into 
         // account in the requirements.
         var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }    
@@ -143,7 +143,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_Sulfuras_DoesNotDegrade(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.Sulfuras, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -158,7 +158,7 @@ public static class GildedRoseTest
         int sellIn, int quality)
     {
         var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -172,7 +172,7 @@ public static class GildedRoseTest
         int sellIn, int quality)
     {
         var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -186,7 +186,7 @@ public static class GildedRoseTest
         int sellIn, int quality)
     {
         var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -199,7 +199,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_BackstagePasses_AfterSellByDate_DropsToZero(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -210,7 +210,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_BackstagePasses_QualityNeverExceedsFifty(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -221,7 +221,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_BackstagePasses_QualityStartsAboveFifty_QualityDoesNotIncrease(int sellIn, int quality)
     {        
         var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -236,7 +236,7 @@ public static class GildedRoseTest
     public static int UpdateQuality_Conjured_BeforeSellByDate_QualityDegradesByTwoPerDay(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.Conjured, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
     }
@@ -250,8 +250,20 @@ public static class GildedRoseTest
     public static int UpdateQuality_Conjured_OnOrAfterSellByDate_QualityDegradesByFourPerDay(int sellIn, int quality)
     {
         var item = new Item { Name = Constants.Conjured, SellIn = sellIn, Quality = quality };
-        var app = new GildedRose(new List<Item> { item });
+        var app = CreateGildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
+    }
+
+    /** HELPERS **/
+    private static IItemConfigFactory CreateConfigFactory()
+    {
+        return new ItemConfigFactory();
+    }
+
+    private static GildedRose CreateGildedRose(IList<Item> items)
+    {
+        var configFactory = CreateConfigFactory();
+        return new GildedRose(items, configFactory);
     }
 }
