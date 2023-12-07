@@ -20,12 +20,8 @@ public class GildedRose
         {
             var config = _itemConfigFactory.Get(item);
 
-            bool sideEffectFeatureToggle = true;
-            int preSellInOffset = ApplyPreSellInQualityOffset(item, sideEffectFeatureToggle);
-            if (!sideEffectFeatureToggle)
-            {
-                item.Quality += preSellInOffset;
-            }
+            int preSellInOffset = ApplyPreSellInQualityOffset(item);
+            item.Quality += preSellInOffset;
 
             int sellInOffset = GetSellInOffset(item);
             item.SellIn += sellInOffset;
@@ -35,7 +31,7 @@ public class GildedRose
         }
     }
 
-    private int ApplyPreSellInQualityOffset(Item item, bool sideAffectFeatureToggle)
+    private int ApplyPreSellInQualityOffset(Item item)
     {
         if (item.Name == Constants.AgedBrie || item.Name == Constants.BackstagePasses)
         {
@@ -45,38 +41,20 @@ public class GildedRose
             }
 
             int offset = 1;
-            int quality = item.Quality + offset;
-
-            if (sideAffectFeatureToggle)
-            {
-                item.Quality = quality;
-            }            
-
+            
             if (item.Name != Constants.BackstagePasses)
             {
                 return offset;
             }
 
-            if (item.SellIn < 11 && quality < 50)
+            if (item.SellIn < 11 && item.Quality + offset < 50)
             {
-                quality += 1;
-                offset += 1;
-
-                if (sideAffectFeatureToggle)
-                {
-                    item.Quality = quality;
-                }                
+                offset += 1;             
             }
 
-            if (item.SellIn < 6 && quality < 50)
+            if (item.SellIn < 6 && item.Quality + offset < 50)
             {
-                offset += 1;
-                quality += 1;
-
-                if (sideAffectFeatureToggle)
-                {
-                    item.Quality = quality;
-                }                
+                offset += 1;      
             }
 
             return offset;
@@ -90,11 +68,6 @@ public class GildedRose
         if (item.Name == Constants.Sulfuras)
         {
             return 0;
-        }
-
-        if (sideAffectFeatureToggle)
-        {
-            item.Quality = item.Quality - 1;
         }
 
         return -1;
