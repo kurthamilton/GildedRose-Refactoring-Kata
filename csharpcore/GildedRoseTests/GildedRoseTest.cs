@@ -5,6 +5,15 @@ using NUnit.Framework;
 namespace GildedRoseTests;
 
 // Requirements: https://github.com/emilybache/GildedRose-Refactoring-Kata/blob/main/GildedRoseRequirements.txt
+/* 
+ * TODO: 
+ * - 1. Refactor code to satisfy passing tests
+ * - 2. Fix failing Conjured tests
+ * - 3. Change tests to meet stricter requirements:
+ *      - Ensure quality can never exceed 50 - even if starting above 50
+ *      - Ensure Sulfuras quality is always 80
+ * - 4. Fix failing tests
+*/
 public static class GildedRoseTest
 {
     [Test]
