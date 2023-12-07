@@ -50,14 +50,9 @@ public class GildedRose
 
     private int ApplyPreSellInQualityOffset(Item item, ItemConfig config)
     {        
-        if (item.Name == Constants.AgedBrie || item.Name == Constants.BackstagePasses)
+        if (item.Name == Constants.BackstagePasses)
         {
             int offset = config.DefaultOffset;
-            
-            if (item.Name != Constants.BackstagePasses)
-            {
-                return offset;
-            }
 
             if (item.SellIn < 11)
             {
