@@ -137,5 +137,83 @@ public static class GildedRoseTest
         var app = new GildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
-    }    
+    }
+
+    /** BACKSTAGE PASSES TESTS **/
+    [TestCase(5, 10, ExpectedResult = 13)]
+    [TestCase(4, 10, ExpectedResult = 13)]
+    [TestCase(3, 10, ExpectedResult = 13)]
+    [TestCase(2, 10, ExpectedResult = 13)]
+    [TestCase(1, 10, ExpectedResult = 13)]
+    public static int UpdateQuality_BackstagePasses_FiveDaysOrLessBeforeSellByDate_IncreasesInQualityByThree(
+        int sellIn, int quality)
+    {
+        var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
+
+    [TestCase(10, 10, ExpectedResult = 12)]
+    [TestCase(9, 10, ExpectedResult = 12)]
+    [TestCase(8, 10, ExpectedResult = 12)]
+    [TestCase(7, 10, ExpectedResult = 12)]
+    [TestCase(6, 10, ExpectedResult = 12)]
+    public static int UpdateQuality_BackstagePasses_TenDaysOrLessBeforeSellByDate_IncreasesInQualityByTwo(
+        int sellIn, int quality)
+    {
+        var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
+
+    [TestCase(11, 10, ExpectedResult = 11)]
+    [TestCase(12, 10, ExpectedResult = 11)]
+    [TestCase(13, 10, ExpectedResult = 11)]
+    [TestCase(14, 10, ExpectedResult = 11)]
+    [TestCase(15, 10, ExpectedResult = 11)]
+    public static int UpdateQuality_BackstagePasses_MoreThanTenDaysBeforeSellByDate_IncreasesInQualityByOne(
+        int sellIn, int quality)
+    {
+        var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
+
+    [TestCase(0, 10, ExpectedResult = 0)]
+    [TestCase(-1, 10, ExpectedResult = 0)]
+    [TestCase(-2, 10, ExpectedResult = 0)]
+    [TestCase(-3, 10, ExpectedResult = 0)]
+    [TestCase(-4, 10, ExpectedResult = 0)]
+    public static int UpdateQuality_BackstagePasses_AfterSellByDate_DropsToZero(int sellIn, int quality)
+    {
+        var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
+
+    [TestCase(3, 50, ExpectedResult = 50)]
+    [TestCase(2, 50, ExpectedResult = 50)]
+    [TestCase(1, 50, ExpectedResult = 50)]
+    public static int UpdateQuality_BackstagePasses_QualityNeverExceedsFifty(int sellIn, int quality)
+    {
+        var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
+
+    [TestCase(3, 100, ExpectedResult = 100)]
+    [TestCase(2, 100, ExpectedResult = 100)]
+    [TestCase(1, 100, ExpectedResult = 100)]
+    public static int UpdateQuality_BackstagePasses_QualityStartsAboveFifty_QualityDoesNotIncrease(int sellIn, int quality)
+    {        
+        var item = new Item { Name = Constants.BackstagePasses, SellIn = sellIn, Quality = quality };
+        var app = new GildedRose(new List<Item> { item });
+        app.UpdateQuality();
+        return item.Quality;
+    }
 }
