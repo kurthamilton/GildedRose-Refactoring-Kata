@@ -60,7 +60,7 @@ public static class GildedRoseTest
     [TestCase(1, 10, ExpectedResult = 11)]
     public static int UpdateQuality_AgedBrie_BeforeSellByDate_IncreasesInQualityByOne(int sellIn, int quality)
     {
-        var item = new Item { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
+        var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
         var app = new GildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
@@ -73,7 +73,7 @@ public static class GildedRoseTest
     [TestCase(-4, 10, ExpectedResult = 12)]
     public static int UpdateQuality_AgedBrie_AfterSellByDate_IncreasesInQualityByTwo(int sellIn, int quality)
     {
-        var item = new Item { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
+        var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
         var app = new GildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
@@ -84,7 +84,7 @@ public static class GildedRoseTest
     [TestCase(-1, 50, ExpectedResult = 50)]
     public static int UpdateQuality_AgedBrie_QualityNeverExceedsFifty(int sellIn, int quality)
     {
-        var item = new Item { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
+        var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
         var app = new GildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
@@ -106,7 +106,7 @@ public static class GildedRoseTest
     [TestCase(-1, 100, ExpectedResult = 100)]
     public static int UpdateQuality_AgedBrie_QualityStartsAboveFifty_QualityDoesNotIncrease(int sellIn, int quality)
     {
-        var item = new Item { Name = "Aged Brie", SellIn = sellIn, Quality = quality };
+        var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
         var app = new GildedRose(new List<Item> { item });
         app.UpdateQuality();
         return item.Quality;
