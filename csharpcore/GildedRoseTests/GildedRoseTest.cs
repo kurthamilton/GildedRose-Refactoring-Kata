@@ -106,6 +106,11 @@ public static class GildedRoseTest
     [TestCase(-1, 100, ExpectedResult = 100)]
     public static int UpdateQuality_AgedBrie_QualityStartsAboveFifty_QualityDoesNotIncrease(int sellIn, int quality)
     {
+        // This behaviour seems to contradict the requirement
+        // 	- The Quality of an item is never more than 50
+        // It is also a requirement that the Item class cannot be changed, so
+        // make an assumption that the behaviour is by design and not taken into 
+        // account in the requirements.
         var item = new Item { Name = Constants.AgedBrie, SellIn = sellIn, Quality = quality };
         var app = new GildedRose(new List<Item> { item });
         app.UpdateQuality();
