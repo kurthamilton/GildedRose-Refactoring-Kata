@@ -20,47 +20,47 @@ public class GildedRose
         {
             var config = _itemConfigFactory.Get(item);
 
-            int preSellInOffset = ApplyPreSellInQualityOffset(item);
+            int preSellInOffset = ApplyPreSellInQualityOffset(item, config);
             item.Quality += preSellInOffset;
 
             int sellInOffset = GetSellInOffset(item);
             item.SellIn += sellInOffset;
 
-            int postSellInOffset = GetPostSellInQualityOffset(item);
+            int postSellInOffset = GetPostSellInQualityOffset(item, config);
             item.Quality += postSellInOffset;
         }
     }
 
-    private int ApplyPreSellInQualityOffset(Item item)
-    {
+    private int ApplyPreSellInQualityOffset(Item item, ItemConfig config)
+    {        
         if (item.Name == Constants.AgedBrie || item.Name == Constants.BackstagePasses)
         {
-            if (item.Quality >= 50)
+            if (item.Quality >= config.Max)
             {
                 return 0;
             }
 
-            int offset = 1;
+            int offset = config.DefaultOffset;
             
             if (item.Name != Constants.BackstagePasses)
             {
                 return offset;
             }
 
-            if (item.SellIn < 11 && item.Quality + offset < 50)
+            if (item.SellIn < 11 && item.Quality + offset < config.Max)
             {
-                offset += 1;             
+                offset += config.DefaultOffset;             
             }
 
-            if (item.SellIn < 6 && item.Quality + offset < 50)
+            if (item.SellIn < 6 && item.Quality + offset < config.Max)
             {
-                offset += 1;      
+                offset += config.DefaultOffset;      
             }
 
             return offset;
         }
 
-        if (item.Quality <= 0)
+        if (item.Quality <= config.Min)
         {
             return 0;
         }
@@ -70,7 +70,7 @@ public class GildedRose
             return 0;
         }
 
-        return -1;
+        return config.DefaultOffset;
     }
 
     private int GetSellInOffset(Item item)
@@ -78,7 +78,7 @@ public class GildedRose
         return item.Name == Constants.Sulfuras ? 0 : -1;        
     }
         
-    private int GetPostSellInQualityOffset(Item item)
+    private int GetPostSellInQualityOffset(Item item, ItemConfig config)
     {
         if (item.SellIn >= 0)
         {
@@ -92,7 +92,7 @@ public class GildedRose
 
         if (item.Name == Constants.AgedBrie)
         {
-            return item.Quality < 50 ? 1 : 0;
+            return item.Quality < config.Max ? config.DefaultOffset : 0;
         }
 
         if (item.Name == Constants.BackstagePasses)
@@ -100,6 +100,6 @@ public class GildedRose
             return -1 * item.Quality;
         }
 
-        return item.Quality > 0 ? -1 : 0;
+        return item.Quality > 0 ? config.DefaultOffset : 0;
     }
 }
